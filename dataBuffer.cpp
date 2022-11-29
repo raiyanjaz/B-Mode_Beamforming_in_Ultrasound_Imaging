@@ -1,8 +1,13 @@
 #include "dataBuffer.h"
 using namespace std;
 
-dataBuffer::dataBuffer()
-{
+dataBuffer::dataBuffer() {
+    int numElement;
+    int numSample;
+    int scanline;
+
+    complex** dataMatrix;
+    dataMatrix = new [numElement];
 
 }
 
