@@ -46,13 +46,24 @@ int main(){
     BmodeClass *scanlineHead = new BmodeClass(parameters, dataHead, 0);
     scanlineHead->next = NULL;
     // ASSIGNMENT 4 PART 5 BEGIN: TO BE COMPLETED BY STUDENTS
-    
+    //
+    //
+    BmodeClass *currentScanline = scanlineHead;
+    currentData = dataHead;
+    for (int i = 1; i < parameters->getNumScanline(); i++) {
+        currentData = currentData->next;
+        currentScanline->next = new BmodeClass(parameters, currentData, i);
+        currentScanline = currentScanline->next;
+        currentScanline->next = NULL;
+    }
+    //
+    //
     // END OF ASSIGNMENT 4 PART 5
 
     cout<<"Scanline Buffer Created"<<endl;
 
     //// 4. Aggregate all scanlines into bmode image
-    float **image2D = new float*[parameters->getNumScanline()]; // Create array of pointers
+    float **image2D = new float* [parameters->getNumScanline()]; // Create array of pointers
     currentScanline = scanlineHead; // Point current scanline to scanline node head
     for (int i=0; i<parameters->getNumScanline(); i++){
         image2D[i] = new float[parameters->getNumPixel()];
