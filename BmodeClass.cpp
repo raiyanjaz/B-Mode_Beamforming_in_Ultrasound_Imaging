@@ -33,34 +33,34 @@ void BmodeClass::beamform() {
     float tTotal = 0;
     int s = 0;
 
-    float pReal = 0;
-    float pImag = 0;
-
     for (int i = 0; i < imparams->getNumPixel(); i++) {
-        tForward = (imparams->getYPosition(line, i)) / imparams->SOS; // calculation for tforward
+        // Initialize pReal and pImag
+        float pReal = 0;
+        float pImag = 0;
+
+        tForward = (imparams->getYPosition(line, i)) / imparams->SOS; // Calculate tForward
 
         for (int k = 0; k < imparams->getNumElement(); k++) {
-            // tBackward = sqrt(pow(y, 2) + pow(elementPosition[k], 2)) / SoS;
-            tBackward = sqrt(pow(imparams->getYPosition(line, i), 2) + pow((imparams->getXPosition(line, i)) - imparams->getElementPosition(k), 2)) / imparams->SOS; // calculation for tBackward
-            tTotal = tForward + tBackward;                                                                                                                           // calculation for tTotal
-            s = floor(tTotal * imparams->FS);
+            // Calculates for tBackward and tTotal
+            tBackward = sqrt(pow(imparams->getYPosition(line, i), 2) + pow((imparams->getXPosition(line, i)) - imparams->getElementPosition(k), 2)) / imparams->SOS; 
+            tTotal = tForward + tBackward;                                                                                                                           
+            s = floor(tTotal * imparams->FS); // Floor function to convert it into a int
 
-            if (s < imparams->getNumSample()) {
-                pReal += RFData->getRealRFData(k, s); // calculation for pReal
-                pImag += RFData->getImagRFData(k, s); // calculation for sample number (integer)
-            }                                                // calculation for pImag
+            if (s < imparams->getNumSample()) { // Incremenets pReal and pImag
+                pReal += RFData->getRealRFData(k, s);
+                pImag += RFData->getImagRFData(k, s); 
+            }                                             
         }
-        scanline[i] = sqrt(pow(pReal, 2) + pow(pImag, 2)); // calculation to determine the echo magnitude and then store the value directly into scanline array
-        pReal = 0;
-        pImag = 0;
+        // Calculates echo magnitude stores scanline array
+        scanline[i] = sqrt(pow(pReal, 2) + pow(pImag, 2)); 
     }
 }
 
 void BmodeClass::getScanline(float *data) {
     for (int i = 0; i < imparams->getNumPixel(); i++)
-        data[i] = scanline[i];
+        data[i] = scanline[i]; // Every element in scanline is copied into data array at corresponding index
 }
 
 void BmodeClass::deleteScanline() {
-    delete scanline; // Deletes the scanline
+    delete scanline; // Releases allocated scanline memory
 }
