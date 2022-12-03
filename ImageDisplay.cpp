@@ -1,5 +1,4 @@
 #include "ImageDisplay.h"
-
 #include<string>
 
 GLfloat vertices[] =

@@ -12,6 +12,8 @@
 #include"VBO.h"
 #include"EBO.h"
 
+#define GLFW_DLL
+
 class ImageDisplay{
 public:
     GLFWwindow* window;
