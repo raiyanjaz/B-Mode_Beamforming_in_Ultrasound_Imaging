@@ -45,6 +45,8 @@ int main(){
     //// 3. Beamform data into linked list
     BmodeClass *scanlineHead = new BmodeClass(parameters, dataHead, 0);
     scanlineHead->next = NULL;
+
+
     // ASSIGNMENT 4 PART 5 BEGIN: TO BE COMPLETED BY STUDENTS
     BmodeClass *currentScanline = scanlineHead;
     currentData = dataHead;
@@ -55,6 +57,8 @@ int main(){
         currentScanline->next = NULL;
     }
     // END OF ASSIGNMENT 4 PART 5
+
+    
 
     cout<<"Scanline Buffer Created"<<endl;
 
