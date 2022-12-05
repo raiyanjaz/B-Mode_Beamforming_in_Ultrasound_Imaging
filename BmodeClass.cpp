@@ -11,22 +11,23 @@ BmodeClass::BmodeClass()
 
 BmodeClass::BmodeClass(imageParam *params, dataBuffer *data, int numline)
 {
+    // Initializing variables based on the constructor parameters
     imparams = params;
     RFData = data;
     line = numline;
 
-    scanline = createScanline(imparams->getNumPixel());
-    beamform();
+    scanline = createScanline(imparams->getNumPixel()); // Allocating memory for scanline
+    beamform();                                         // Scanline beamforming
 }
 
 BmodeClass::~BmodeClass()
 {
-    deleteScanline();
+    deleteScanline(); // Release scanline array memory
 }
 
 float *BmodeClass::createScanline(int numPixel)
 {
-    float *mem = new float[numPixel];
+    float *mem = new float[numPixel]; // Allocating a 1D float array of size numPixel
     return mem;
 }
 

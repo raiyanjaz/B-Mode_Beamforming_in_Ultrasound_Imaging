@@ -14,7 +14,7 @@ dataBuffer::dataBuffer()
 
 dataBuffer::dataBuffer(std::ifstream *imagFile, std::ifstream *realFile, int inputNumElement, int inputNumSample, int inputScanline)
 {
-    // Re-Initialzing the variables to
+    // Re-Initialzing the variables to their input variables
     numElement = inputNumElement;
     numSample = inputNumSample;
     scanline = inputScanline;
@@ -40,21 +40,24 @@ complex **dataBuffer::createDataMatrix()
 
 int dataBuffer::loadRFData(complex **RFData, std::ifstream *imagFile, std::ifstream *realFile)
 {
-    const int MAX = 100; 
+    const int MAX = 100;
     char line[MAX];
 
-    for (int i = 0; i < numElement; i++) {
-        for (int j = 0; j < numSample; j++) {
-            imagFile->getline(line, MAX); // open the imaginary text file
-            RFData[i][j].imag = atof(line);     // converts each charcter array to float and then stores it in corresponding RFData array
+    if (imagFile->fail() || realFile->fail()) // Returns -1 if the files fail to open
+        return -1;
 
-            realFile->getline(line, MAX); // open the real text file
-            RFData[i][j].real = atof(line);     // converts each charcter array to float and then stores it in corresponding RFData array
+    for (int i = 0; i < numElement; i++)
+    {
+        for (int j = 0; j < numSample; j++)
+        {
+            imagFile->getline(line, MAX);   // Gets each line from the imaginary file
+            RFData[i][j].imag = atof(line); // Converts the character array to float and then stores it in the imaginary part of the RFData array
+
+            realFile->getline(line, MAX);   // Gets each line from the real file
+            RFData[i][j].real = atof(line); // Converts the character array to float and then stores it in the imaginary part of the RFData array
         }
     }
 
-    if (imagFile->fail() || realFile->fail())
-        return -1;
     return 0;
 }
 
