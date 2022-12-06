@@ -33,11 +33,11 @@ float *BmodeClass::createScanline(int numPixel)
 
 void BmodeClass::beamform()
 {
-    // Initialize variables
-    float tForward = 0;
-    float tBackward = 0;
-    float tTotal = 0;
-    int s = 0;
+    // Initialize array variables
+    float tForward[imparams->getNumPixel()];
+    float tBackward[imparams->getNumPixel()][imparams->getNumElement()];
+    float tTotal[imparams->getNumPixel()];
+    int s[imparams->getNumPixel()][imparams->getNumElement()];
 
     for (int i = 0; i < imparams->getNumPixel(); i++)
     {
@@ -45,19 +45,19 @@ void BmodeClass::beamform()
         float pReal = 0;
         float pImag = 0;
 
-        tForward = (imparams->getYPosition(line, i)) / imparams->SOS; // Calculate tForward
+        tForward[i] = (imparams->getYPosition(line, i)) / imparams->SOS; // Calculate tForward
 
         for (int k = 0; k < imparams->getNumElement(); k++)
         {
             // Calculates for tBackward and tTotal
-            tBackward = sqrt(pow(imparams->getYPosition(line, i), 2) + pow((imparams->getXPosition(line, i)) - imparams->getElementPosition(k), 2)) / imparams->SOS;
-            tTotal = tForward + tBackward;
-            s = floor(tTotal * imparams->FS); // Floor function to convert it into a int
+            tBackward[i][k] = sqrt(pow(imparams->getYPosition(line, i), 2) + pow((imparams->getXPosition(line, i)) - imparams->getElementPosition(k), 2)) / imparams->SOS;
+            tTotal[i] = tForward[i] + tBackward[i][k];
+            s[i][k] = floor(tTotal[i] * imparams->FS); // Floor function to convert it into a int
 
-            if (s < imparams->getNumSample())
+            if (s[i][k] < imparams->getNumSample())
             { // Incremenets pReal and pImag
-                pReal += RFData->getRealRFData(k, s);
-                pImag += RFData->getImagRFData(k, s);
+                pReal += RFData->getRealRFData(k, s[i][k]);
+                pImag += RFData->getImagRFData(k, s[i][k]);
             }
         }
         // Calculates echo magnitude stores scanline array
