@@ -54,7 +54,7 @@ int dataBuffer::loadRFData(complex **RFData, std::ifstream *imagFile, std::ifstr
             RFData[i][j].imag = atof(line); // Converts the character array to float and then stores it in the imaginary part of the RFData array
 
             realFile->getline(line, MAX);   // Gets each line from the real file
-            RFData[i][j].real = atof(line); // Converts the character array to float and then stores it in the imaginary part of the RFData array
+            RFData[i][j].real = atof(line); // Converts the character array to float and then stores it in the real part of the RFData array
         }
     }
 
