@@ -24,6 +24,11 @@ In this critical part of the project, I completed the missing section of the mai
 
 The culmination of this project was the successful execution of the program, which displayed the B-mode ultrasound image. I provided the desired imaging depth and pixel count, and the program generated the image,
 
-## Command line input to generate the image
+## Additional Notes
 
+**Command line input to generate image:**
 g++ -g ImageDisplay.cpp EBO.cpp VAO.cpp VBO.cpp Texture.cpp shaderClass.cpp glew.c -Llib -lglfw3 -lopengl32 -lwinmm -lgdi32 -Iinclude -DGLEW_STATIC Bmode.cpp dataBuffer.cpp BmodeClass.cpp imageParam.cpp -o bmode
+
+_Note: Real and imaginary datasets not included due to large size._
+
+
